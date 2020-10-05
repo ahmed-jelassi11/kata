@@ -10,13 +10,13 @@ class ClockTest {
 
     @Test
     public void test_return_instant_date() {
-        Clock clock = new TestableClock();
-        String date = clock.now();
+        ClockService clockService = new TestableClock();
+        String date = clockService.now();
         assertEquals("05/10/2020", date);
     }
 
 
-    private class TestableClock extends Clock {
+    private class TestableClock extends ClockService {
         @Override
         protected LocalDate getDate() {
             return LocalDate.of(2020, 10, 5);

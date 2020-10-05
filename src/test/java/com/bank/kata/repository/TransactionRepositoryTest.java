@@ -3,7 +3,7 @@ package com.bank.kata.repository;
 import com.bank.kata.fixtures.AccountFixture;
 import com.bank.kata.fixtures.TransactionFixture;
 import com.bank.kata.model.Account;
-import com.bank.kata.service.Clock;
+import com.bank.kata.service.ClockService;
 import com.bank.kata.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,17 +22,17 @@ class TransactionRepositoryTest {
     public static final String TODAY = "05/10/2020";
     private TransactionRepository transactionRepository;
     @Mock
-    Clock clock;
+    ClockService clockService;
 
     @BeforeEach
     public void init() {
         Account account = AccountFixture.getAccount();
-        transactionRepository = new TransactionRepository(account, clock);
+        transactionRepository = new TransactionRepository(account, clockService);
     }
 
     @Test
     public void test_create_deposit_transaction() {
-        given(clock.now()).willReturn(TODAY);
+        given(clockService.now()).willReturn(TODAY);
         transactionRepository.addDeposit(500);
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
@@ -41,7 +41,7 @@ class TransactionRepositoryTest {
 
     @Test
     public void test_create_withdraw_transaction() {
-        given(clock.now()).willReturn(TODAY);
+        given(clockService.now()).willReturn(TODAY);
         transactionRepository.addWithdrawal(500);
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
