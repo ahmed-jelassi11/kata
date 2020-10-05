@@ -1,8 +1,7 @@
-package com.bank.kata;
+package com.bank.kata.repository;
 
+import com.bank.kata.fixtures.TransactionFixture;
 import com.bank.kata.model.Transaction;
-import com.bank.kata.repository.TransactionRepository;
-import com.bank.kata.service.AccountService;
 import com.bank.kata.service.StatementPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,38 +16,37 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class AccountServiceTest {
+public class AccountRepositoryTest {
 
     @Mock
     TransactionRepository transactionRepository;
     @Mock
     StatementPrinter statementPrinter;
 
-    private AccountService accountService;
+    private AccountRepository accountRepository;
 
     @BeforeEach
     public void init() {
-        accountService = new AccountService(transactionRepository, statementPrinter);
+        accountRepository = new AccountRepository(transactionRepository, statementPrinter);
     }
 
     @Test
     public void test_deposit_transaction() {
-        accountService.deposit(100);
+        accountRepository.deposit(100);
         verify(transactionRepository).addDeposit(100);
     }
 
     @Test
     public void test_withdraw_transaction() {
-        accountService.withdraw(100);
+        accountRepository.withdraw(100);
         verify(transactionRepository).addWithdrawal(100);
     }
 
     @Test
     public void test_print_statement() {
-        List<Transaction> transactions = asList(Transaction.builder().build());
+        List<Transaction> transactions = asList(TransactionFixture.getDepositTransaction());
         given(transactionRepository.allTransactions()).willReturn(transactions);
-
-        accountService.printStatement();
+        accountRepository.printStatement();
         verify(statementPrinter).print(transactions);
     }
 }

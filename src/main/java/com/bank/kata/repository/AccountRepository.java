@@ -1,14 +1,15 @@
-package com.bank.kata.service;
+package com.bank.kata.repository;
 
 import com.bank.kata.repository.TransactionRepository;
+import com.bank.kata.service.StatementPrinter;
 
-public class AccountService {
+public class AccountRepository {
 
 
     private TransactionRepository transactionRepository;
     private StatementPrinter statementPrinter;
 
-    public AccountService(TransactionRepository transactionRepository, StatementPrinter statementPrinter) {
+    public AccountRepository(TransactionRepository transactionRepository, StatementPrinter statementPrinter) {
         this.transactionRepository = transactionRepository;
         this.statementPrinter = statementPrinter;
     }

@@ -1,34 +1,40 @@
 package com.bank.kata;
 
+import com.bank.kata.fixtures.AccountFixture;
 import com.bank.kata.model.Account;
+import com.bank.kata.model.Clock;
+import com.bank.kata.repository.AccountRepository;
 import com.bank.kata.repository.TransactionRepository;
-import com.bank.kata.service.AccountService;
 import com.bank.kata.service.StatementPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class AcceptanceTest {
 
-    private AccountService accountService;
+    private AccountRepository accountRepository;
     private Account account;
+    @Mock
+    Clock clock;
 
     @BeforeEach
     public void init() {
-        account = new Account(UUID.randomUUID().toString());
-        TransactionRepository transactionRepository = new TransactionRepository(account);
+        account = AccountFixture.getAccount();
+        TransactionRepository transactionRepository = new TransactionRepository(account, clock);
         StatementPrinter statementPrinter = new StatementPrinter();
-        accountService = new AccountService(transactionRepository, statementPrinter);
+        accountRepository = new AccountRepository(transactionRepository, statementPrinter);
     }
 
     @Test
     public void printStatementTest() {
+        accountRepository.deposit(1000);
+        accountRepository.withdraw(100);
+        accountRepository.deposit(500);
 
-        accountService.deposit(1000);
-        accountService.withdraw(100);
-        accountService.deposit(500);
-
-        accountService.printStatement();
+        accountRepository.printStatement();
     }
 }
