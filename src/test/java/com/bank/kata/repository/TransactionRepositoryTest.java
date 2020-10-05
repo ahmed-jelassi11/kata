@@ -3,9 +3,8 @@ package com.bank.kata.repository;
 import com.bank.kata.fixtures.AccountFixture;
 import com.bank.kata.fixtures.TransactionFixture;
 import com.bank.kata.model.Account;
-import com.bank.kata.model.Clock;
+import com.bank.kata.service.Clock;
 import com.bank.kata.model.Transaction;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,22 +32,20 @@ class TransactionRepositoryTest {
 
     @Test
     public void test_create_deposit_transaction() {
-        given(clock.todayAsString()).willReturn(TODAY);
+        given(clock.now()).willReturn(TODAY);
         transactionRepository.addDeposit(500);
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
-        assertEquals(TransactionFixture.getDepositTransaction().getAmount(), transactions.get(0).getAmount());
-        assertEquals(TransactionFixture.getDepositTransaction().getDate(), transactions.get(0).getDate());
+        assertEquals(TransactionFixture.getDepositTransaction(), transactions.get(0));
     }
 
     @Test
     public void test_create_withdraw_transaction() {
-        given(clock.todayAsString()).willReturn(TODAY);
+        given(clock.now()).willReturn(TODAY);
         transactionRepository.addWithdrawal(500);
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
-        assertEquals(TransactionFixture.getWithDrawTransaction().getAmount(), transactions.get(0).getAmount());
-        assertEquals(TransactionFixture.getWithDrawTransaction().getDate(), transactions.get(0).getDate());
+        assertEquals(TransactionFixture.getWithDrawTransaction(), transactions.get(0));
     }
 
 }

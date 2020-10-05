@@ -1,7 +1,7 @@
 package com.bank.kata.repository;
 
 import com.bank.kata.model.Account;
-import com.bank.kata.model.Clock;
+import com.bank.kata.service.Clock;
 import com.bank.kata.model.Transaction;
 
 import java.util.List;
@@ -18,11 +18,11 @@ public class TransactionRepository {
     }
 
     public void addDeposit(int amount) {
-        account.addTransaction(Transaction.builder().date(clock.todayAsString()).amount(amount).build());
+        account.addTransaction(Transaction.builder().date(clock.now()).amount(amount).build());
     }
 
     public void addWithdrawal(int amount) {
-        account.addTransaction(Transaction.builder().date(clock.todayAsString()).amount(-amount).build());
+        account.addTransaction(Transaction.builder().date(clock.now()).amount(-amount).build());
     }
 
     public List<Transaction> allTransactions() {
