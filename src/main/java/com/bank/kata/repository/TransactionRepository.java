@@ -4,6 +4,7 @@ import com.bank.kata.model.Account;
 import com.bank.kata.service.ClockService;
 import com.bank.kata.model.Transaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class TransactionRepository {
@@ -17,12 +18,12 @@ public class TransactionRepository {
         this.clockService = clockService;
     }
 
-    public void addDeposit(int amount) {
+    public void addDeposit(BigDecimal amount) {
         account.addTransaction(Transaction.builder().date(clockService.now()).amount(amount).build());
     }
 
-    public void addWithdrawal(int amount) {
-        account.addTransaction(Transaction.builder().date(clockService.now()).amount(-amount).build());
+    public void addWithdrawal(BigDecimal amount) {
+        account.addTransaction(Transaction.builder().date(clockService.now()).amount(amount.negate()).build());
     }
 
     public List<Transaction> allTransactions() {

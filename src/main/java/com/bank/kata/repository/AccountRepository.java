@@ -3,6 +3,8 @@ package com.bank.kata.repository;
 import com.bank.kata.repository.TransactionRepository;
 import com.bank.kata.service.StatementPrinter;
 
+import java.math.BigDecimal;
+
 public class AccountRepository {
 
 
@@ -14,11 +16,11 @@ public class AccountRepository {
         this.statementPrinter = statementPrinter;
     }
 
-    public void deposit(int amount) {
+    public void deposit(BigDecimal amount) {
         transactionRepository.addDeposit(amount);
     }
 
-    public void withdraw(int amount) {
+    public void withdraw(BigDecimal amount) {
         transactionRepository.addWithdrawal(amount);
     }
 

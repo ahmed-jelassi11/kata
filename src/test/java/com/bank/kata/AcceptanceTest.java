@@ -14,6 +14,8 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+
 import static com.bank.kata.service.StatementPrinter.STATEMENT_HEADER;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.inOrder;
@@ -40,9 +42,9 @@ public class AcceptanceTest {
     @Test
     public void test_print_all_transaction_statement() {
         given(clockService.now()).willReturn("20/09/2020", "22/09/2020", "05/10/2020");
-        accountRepository.deposit(500);
-        accountRepository.withdraw(200);
-        accountRepository.deposit(1000);
+        accountRepository.deposit(BigDecimal.valueOf(500));
+        accountRepository.withdraw(BigDecimal.valueOf(200));
+        accountRepository.deposit(BigDecimal.valueOf(1000));
 
         accountRepository.printStatement();
 

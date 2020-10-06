@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +34,7 @@ class TransactionRepositoryTest {
     @Test
     public void test_create_deposit_transaction() {
         given(clockService.now()).willReturn(TODAY);
-        transactionRepository.addDeposit(500);
+        transactionRepository.addDeposit(BigDecimal.valueOf(500));
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
         assertEquals(TransactionFixture.getDepositTransaction(), transactions.get(0));
@@ -42,7 +43,7 @@ class TransactionRepositoryTest {
     @Test
     public void test_create_withdraw_transaction() {
         given(clockService.now()).willReturn(TODAY);
-        transactionRepository.addWithdrawal(500);
+        transactionRepository.addWithdrawal(BigDecimal.valueOf(500));
         List<Transaction> transactions = transactionRepository.allTransactions();
         assertEquals(1, transactions.size());
         assertEquals(TransactionFixture.getWithDrawTransaction(), transactions.get(0));

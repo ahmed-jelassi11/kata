@@ -18,6 +18,6 @@ public class Account {
 
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
-        this.balance = BigDecimal.valueOf(transaction.getAmount()).add(this.balance);
+        this.balance = transaction.getAmount().add(this.balance);
     }
 }

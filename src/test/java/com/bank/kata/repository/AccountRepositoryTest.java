@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -32,14 +33,14 @@ public class AccountRepositoryTest {
 
     @Test
     public void test_deposit_transaction() {
-        accountRepository.deposit(100);
-        verify(transactionRepository).addDeposit(100);
+        accountRepository.deposit(BigDecimal.valueOf(100));
+        verify(transactionRepository).addDeposit(BigDecimal.valueOf(100));
     }
 
     @Test
     public void test_withdraw_transaction() {
-        accountRepository.withdraw(100);
-        verify(transactionRepository).addWithdrawal(100);
+        accountRepository.withdraw(BigDecimal.valueOf(100));
+        verify(transactionRepository).addWithdrawal(BigDecimal.valueOf(100));
     }
 
     @Test

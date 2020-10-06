@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Builder
@@ -11,15 +12,15 @@ import java.util.Objects;
 @Setter
 public class Transaction {
     private String date;
-    private int amount;
+    private BigDecimal amount;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return amount == that.amount &&
-                Objects.equals(date, that.date);
+        return Objects.equals(date, that.date) &&
+                Objects.equals(amount, that.amount);
     }
 
     @Override

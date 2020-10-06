@@ -1,5 +1,6 @@
 package com.bank.kata.service;
 
+import com.bank.kata.model.Account;
 import com.bank.kata.model.Console;
 import com.bank.kata.model.Transaction;
 
@@ -13,6 +14,7 @@ public class StatementPrinter {
 
     public static final String STATEMENT_HEADER = "DATE | AMOUNT | BALANCE";
     private Console console;
+    private Account account;
 
     public StatementPrinter(Console console) {
         this.console = console;
@@ -24,9 +26,9 @@ public class StatementPrinter {
     }
 
     private void printStatementLines(List<Transaction> transactions) {
-        AtomicInteger balance = new AtomicInteger(0);
+        AtomicInteger runningBalance = new AtomicInteger(0);
         transactions.stream()
-                .map(transaction -> statementLine(transaction, balance))
+                .map(transaction -> statementLine(transaction, runningBalance))
                 .collect(Collectors.toCollection(LinkedList::new))
                 .descendingIterator()
                 .forEachRemaining(console::printLine);
@@ -37,6 +39,6 @@ public class StatementPrinter {
                 + " | "
                 + transaction.getAmount() +
                 " | "
-                + balance.addAndGet(transaction.getAmount());
+                + balance.addAndGet(transaction.getAmount().intValue());
     }
 }
